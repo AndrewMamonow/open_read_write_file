@@ -7,14 +7,12 @@ def add_cook_book(ingredients):
     for line in ingredients:
         line = line.strip()
         keys = ['ingredient_name', 'quantity', 'measure']
-        ingredient_name, quantity, measure = line.split(" | ")
-        # dishes.append(dict(zip(keys, line.split(' | '))))
-        dishes.append({keys[0]: ingredient_name,
-                    keys[1]: int(quantity),
-                    keys[2]: measure})
+        dishes.append(dict(zip(keys, line.split(' | '))))
+    for quantity in dishes:
+        quantity[keys[1]] = int(quantity[keys[1]])          
     return dishes
 
-# Функция создания словаря ингридиентов
+# Функция создания словаря ингридиентов для задачи №2
 def get_shop_list_by_dishes(dishes, person_count):
     ingredients_dict = {}
     for dish in dishes:
@@ -24,9 +22,9 @@ def get_shop_list_by_dishes(dishes, person_count):
                 quantity = ingredients['quantity']
                 measure = ingredients['measure']
                 if ingredient_name not in ingredients_dict:
-                    ingredients_dict[ingredient_name] = {'measure': measure,'quantity': int(quantity) * person_count}
+                    ingredients_dict[ingredient_name] = {'measure': measure,'quantity': quantity * person_count}
                 else:
-                    ingredients_dict[ingredient_name]['quantity'] += int(quantity) * person_count
+                    ingredients_dict[ingredient_name]['quantity'] += quantity * person_count
         else:
             return f'Ошибка: Блюда {dish} нет в кулинарной книге'
     return ingredients_dict
